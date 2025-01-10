@@ -39,6 +39,7 @@ const getAppBundleId = () => {
 // ******** CONFIG ********
 
 const config: ForgeConfig = {
+  outDir: './build',
   buildIdentifier: getBuildIdentifier,
   packagerConfig: {
     name,
