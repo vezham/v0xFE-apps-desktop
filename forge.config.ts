@@ -8,15 +8,21 @@ import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 
 const config: ForgeConfig = {
+  buildIdentifier() {
+      return process.env.IS_BETA ? 'beta' : 'prod'
+  },
   packagerConfig: {
     name: 'Vezham Messages',
     icon:'images/icon',
     asar: true,
+    appBundleId: process.env.IS_BETA ? 'com.vezham.beta.app' : 'com.vezham.app',
+    appVersion: '1.0.5',
+    buildVersion: '250113',
     appCategoryType: 'public.app-category.business', // wjdlz/NOTE: [Apple's documentation](https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/TP40009250-SW8)
-    appCopyright: 'Copyright © 2025 Vezham. All rights reserved',
+    appCopyright: 'Copyright © 2025 Vezham. All rights reserved.',
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [new MakerSquirrel({}, ['win32']), new MakerZIP({}, ['darwin']), new MakerRpm({}, ['linux']), new MakerDeb({}, ['linux'])],
   plugins: [
     new VitePlugin({
       // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
