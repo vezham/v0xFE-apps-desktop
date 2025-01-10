@@ -15,9 +15,6 @@ importers:
       '@electron-forge/cli':
         specifier: ^7.6.0
         version: 7.6.0(encoding@0.1.13)
-      '@electron-forge/core':
-        specifier: ^7.6.0
-        version: 7.6.0(encoding@0.1.13)
       '@electron-forge/maker-deb':
         specifier: ^7.6.0
         version: 7.6.0

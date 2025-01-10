@@ -7,19 +7,50 @@ import { VitePlugin } from '@electron-forge/plugin-vite';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 
+const name = 'Vezham Messages'
+const appCategoryType = 'public.app-category.business' // wjdlz/NOTE: [Apple's documentation](https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/TP40009250-SW8)
+const appVersion = '1.0.5'
+const buildVersion = 'v0x250113'
+
+const appBundleId = {
+  'prod': 'com.vezham.apps.messages',
+  'beta': 'com.vezham.beta.apps.messages',
+}
+
+const appCopyright = 'Copyright © 2025 Vezham. All rights reserved.'
+const extendInfo = {
+  "v0xauthor":"v0xfe-desktop-apps"
+}
+
+// END of v-config.ts
+
+const getBuildIdentifier = () => {
+  return process.env.IS_BETA ? 'beta' : 'prod'
+}
+
+const getAppBundleId = () => {
+  const id = appBundleId || {
+    'prod': 'com.vezham.apps',
+    'beta': 'com.vezham.beta.apps',
+  }
+  return id[getBuildIdentifier()]
+}
+
+// ******** CONFIG ********
+
 const config: ForgeConfig = {
-  buildIdentifier() {
-      return process.env.IS_BETA ? 'beta' : 'prod'
-  },
+  buildIdentifier: getBuildIdentifier,
   packagerConfig: {
-    name: 'Vezham Messages',
+    name,
     icon:'images/icon',
-    asar: true,
-    appBundleId: process.env.IS_BETA ? 'com.vezham.beta.app' : 'com.vezham.app',
-    appVersion: '1.0.5',
-    buildVersion: '250113',
-    appCategoryType: 'public.app-category.business', // wjdlz/NOTE: [Apple's documentation](https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/TP40009250-SW8)
-    appCopyright: 'Copyright © 2025 Vezham. All rights reserved.',
+    appBundleId: getAppBundleId(),
+    appVersion,
+    buildVersion,
+    appCategoryType,
+    appCopyright,
+    extendInfo,
+    asar: true
+    // osxSign: {},
   },
   rebuildConfig: {},
   makers: [new MakerSquirrel({}, ['win32']), new MakerZIP({}, ['darwin']), new MakerRpm({}, ['linux']), new MakerDeb({}, ['linux'])],
