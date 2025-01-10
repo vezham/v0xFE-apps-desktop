@@ -1,7 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import started from 'electron-squirrel-startup';
-import { env } from 'process';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -14,6 +13,9 @@ const createWindow = () => {
     width: 800,
     height: 600,
     icon:  '/images/icon.png',
+    // title: 'Home',
+    // vibrancy: 'under-window',
+    // visualEffectState: 'active',
     // titleBarStyle: 'hidden',
     // trafficLightPosition: { x: 15, y: 10 },
     webPreferences: {
