@@ -6,50 +6,60 @@ import { MakerRpm } from '@electron-forge/maker-rpm';
 import { VitePlugin } from '@electron-forge/plugin-vite';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
+import 'dotenv/config'
 
-const name = 'Vezham Messages'
-const appCategoryType = 'public.app-category.business' // wjdlz/NOTE: [Apple's documentation](https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/TP40009250-SW8)
-const appVersion = '1.0.5'
-const buildVersion = 'v0x250113'
+// console.log('forge.config/[V_CONFIG_APP]', process.env.V_CONFIG_APP)
+// console.log('forge.config/[V_CONFIG_AUTHOR]', process.env.V_CONFIG_AUTHOR)
 
-const appBundleId = {
-  'prod': 'com.vezham.apps.messages',
-  'beta': 'com.vezham.beta.apps.messages',
+type App = {
+  name: string
+  category: string // wjdlz/NOTE: [Apple's documentation](https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/TP40009250-SW8)
+  app_version: string
+  build_version: string
+  // ConfigBuild
+  pkg_bundle_id: string
+  app_bundle_id: string
+  env: 'local' | 'tva' | 'dev' | 'qa' | 'preview' | 'prod'
+  status: 'unstable' | 'alpha' | 'beta' | 'stable' // wjdlz/NOTE: stable -->'prod'
 }
 
-const appCopyright = 'Copyright © 2025 Vezham. All rights reserved.'
-const extendInfo = {
-  "v0xauthor":"v0xfe-desktop-apps"
+type Author = {
+  copyright: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  info: {[property: string]: any}
 }
+
+const typeCast = <T>(data: string): T => {
+  try {
+    const parsed_data = JSON.parse(data);
+    return parsed_data as T;
+  } catch (error) {
+    throw new Error(`Failed to parse config: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+}
+
+const app = typeCast<App>(process.env.V_CONFIG_APP)
+const author = typeCast<Author>(process.env.V_CONFIG_AUTHOR)
 
 // END of v-config.ts
 
-const getBuildIdentifier = () => {
-  return process.env.IS_BETA ? 'beta' : 'prod'
-}
-
-const getAppBundleId = () => {
-  const id = appBundleId || {
-    'prod': 'com.vezham.apps',
-    'beta': 'com.vezham.beta.apps',
-  }
-  return id[getBuildIdentifier()]
-}
+const getAppBundleId = () => `${app.pkg_bundle_id}${app.env === 'prod'? '' : `.${app.env}.${app.status}`}.${app.app_bundle_id}`
+const getBundleVersion = () => `${app.build_version}.${process.env.SHA || Date.now()}`
 
 // ******** CONFIG ********
 
 const config: ForgeConfig = {
   outDir: './build',
-  buildIdentifier: getBuildIdentifier,
+  buildIdentifier: app.env,
   packagerConfig: {
-    name,
+    name: app.name,
     icon:'images/icon',
     appBundleId: getAppBundleId(),
-    appVersion,
-    buildVersion,
-    appCategoryType,
-    appCopyright,
-    extendInfo,
+    appVersion: app.app_version,
+    buildVersion: getBundleVersion(),
+    appCategoryType: app.category,
+    appCopyright: author.copyright,
+    extendInfo: author.info,
     asar: true
     // osxSign: {},
   },
@@ -90,7 +100,7 @@ const config: ForgeConfig = {
       [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
-  ],
+  ]
 };
 
 export default config;

@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import started from 'electron-squirrel-startup';
 
+console.log('main', process.env)
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
   app.quit();
@@ -23,7 +24,6 @@ const createWindow = () => {
     },
   });
 
-  // console.log(env)
   // mainWindow.loadURL('http://localhost:8080')
   // mainWindow.loadURL('https://lab5-ic-web-vezham--policy-center-timeline-61b5bb1-vgfywiin.web.app')
   // and load the index.html of the app.
