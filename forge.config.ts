@@ -43,8 +43,9 @@ const author = typeCast<Author>(process.env.V_CONFIG_AUTHOR)
 
 // END of v-config.ts
 
-const getAppBundleId = () => `${app.pkg_bundle_id}${app.env === 'prod'? '' : `.${app.env}.${app.status}`}.${app.app_bundle_id}`
-const getBundleVersion = () => `${app.build_version}.${process.env.SHA || Date.now()}`
+const getEnvBadge = () => `${app.env === 'prod'? '' : `.${app.env}.${app.status}`}`
+const getAppBundleId = () => `${app.pkg_bundle_id}${getEnvBadge()}.${app.app_bundle_id}`
+const getBundleVersion = () => `${app.build_version}${getEnvBadge()}.${process.env.SHA || Date.now()}`
 
 // ******** CONFIG ********
 
