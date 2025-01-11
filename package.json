@@ -2,11 +2,15 @@
   "name": "v0xfe-desktop-apps",
   "version": "1.0.2",
   "productName": "",
-  "author": {
-    "name": "vigneshwaran-vtpl",
-    "email": "vigneshwaran@vezham.com"
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vezham/v0xFE-desktop-apps"
   },
-  "license": "MIT",
+  "author": {
+    "name": "v0xFE-desktop-apps",
+    "email": "frontend-developers@vezham.com"
+  },
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
