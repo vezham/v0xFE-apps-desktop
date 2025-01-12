@@ -7,6 +7,7 @@ import { VitePlugin } from '@electron-forge/plugin-vite';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 import 'dotenv/config'
+import { writeFileSync } from 'fs'
 
 // console.log('forge.config/[V_CONFIG_APP]', process.env.V_CONFIG_APP)
 // console.log('forge.config/[V_CONFIG_AUTHOR]', process.env.V_CONFIG_AUTHOR)
@@ -27,6 +28,12 @@ type Author = {
   copyright: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   info: {[property: string]: any}
+}
+
+type AppUrl = {
+  __type: 'offline' | 'local' | 'preview' | 'prod' | string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [property: string]: any
 }
 
 const typeCast = <T>(data: string): T => {
@@ -101,7 +108,27 @@ const config: ForgeConfig = {
       [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
-  ]
+  ],
+  hooks: {
+    generateAssets: async () => {
+      const app_url = typeCast<AppUrl>(process.env.V_APP_URL)
+      const url = app_url.__type !== 'offline' && app_url[app_url.__type]
+
+      writeFileSync(
+        './src/v.config.json',
+        JSON.stringify({
+          V_APP_URL: url
+        })
+      );
+      // writeFileSync(
+      //   './src/v.config.env',
+      //   JSON.stringify({
+      //     v_app_url: process.env.V_APP_URL,
+      //     V_APP_URL: process.env.MAIN_WINDOW_VITE_DEV_SERVER_URL
+      //   })
+      // );
+    }
+  }
 };
 
 export default config;

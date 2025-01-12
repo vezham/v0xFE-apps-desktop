@@ -1,8 +1,11 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import started from 'electron-squirrel-startup';
+import { typeCast, V_CONFIG } from './types';
+import v_config from './v.config.json'
 
-console.log('main', process.env)
+// console.log('main', process.env)
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
   app.quit();
@@ -24,12 +27,22 @@ const createWindow = () => {
     },
   });
 
-  // mainWindow.loadURL('http://localhost:8080')
-  // mainWindow.loadURL('https://lab5-ic-web-vezham--policy-center-timeline-61b5bb1-vgfywiin.web.app')
-  // and load the index.html of the app.
+  // wjdlz/TODO: handle dotenv file load issue in prod
+  // // let app_url = typeCast<AppUrl>(process.env.V_APP_URL)
+  // let app_url: AppUrl = {__type: ''}
+  // try{
+  //   app_url = typeCast<AppUrl>(process.env.V_APP_URL)
+  // }catch(error){ /* wjdlz/NOTE: loading offline */ }
+  // if(app_url.__type !== 'offline' && app_url[app_url.__type]) {
+  //   mainWindow.loadURL(app_url[app_url.__type])
+  // } else 
+
+  const V_CONFIG = typeCast<V_CONFIG>(JSON.stringify(v_config))
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-  } else {
+  }  else if (V_CONFIG.V_APP_URL) {
+    mainWindow.loadURL(V_CONFIG.V_APP_URL);
+  } else {// to load the index.html of the app.
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
 
