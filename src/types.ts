@@ -16,4 +16,5 @@ export type AppUrl = {
 
 export type V_CONFIG = {
     V_APP_URL: string
+    V_HELP_CENTER: string
 }

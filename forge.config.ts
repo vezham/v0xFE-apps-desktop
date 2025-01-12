@@ -36,6 +36,10 @@ type AppUrl = {
   [property: string]: any
 }
 
+type AppMenu = {
+  help_center: string
+}
+
 const typeCast = <T>(data: string): T => {
   try {
     const parsed_data = JSON.parse(data);
@@ -114,10 +118,13 @@ const config: ForgeConfig = {
       const app_url = typeCast<AppUrl>(process.env.V_APP_URL)
       const url = app_url.__type !== 'offline' && app_url[app_url.__type]
 
+      const app_menu = typeCast<AppMenu>(process.env.V_APP_MENU)
+
       writeFileSync(
         './src/v.config.json',
         JSON.stringify({
-          V_APP_URL: url
+          V_APP_URL: url,
+          V_HELP_CENTER: app_menu.help_center
         })
       );
       // writeFileSync(
