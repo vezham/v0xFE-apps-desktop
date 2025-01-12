@@ -15,6 +15,7 @@ export type AppUrl = {
 }
 
 export type V_CONFIG = {
+    V_IS_DEBUG: boolean
     V_APP_URL: string
     V_HELP_CENTER: string
 }

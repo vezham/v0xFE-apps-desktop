@@ -133,7 +133,7 @@ const template = [
     submenu: [
       { role: 'reload' },
       { role: 'forceReload' },
-      // { role: 'toggleDevTools' },
+      ...(V_CONFIG.V_IS_DEBUG? [{ role: 'toggleDevTools' }] : []),
       { type: 'separator' },
       { role: 'resetZoom' },
       { role: 'zoomIn' },

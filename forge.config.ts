@@ -123,6 +123,7 @@ const config: ForgeConfig = {
       writeFileSync(
         './src/v.config.json',
         JSON.stringify({
+          V_IS_DEBUG: JSON.parse(process.env.V_IS_DEBUG) as boolean,
           V_APP_URL: url,
           V_HELP_CENTER: app_menu.help_center
         })
