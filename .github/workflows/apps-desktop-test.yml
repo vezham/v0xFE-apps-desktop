@@ -110,7 +110,7 @@ jobs:
           if-no-files-found: ignore
 
   create-release:
-    needs: make
+    needs: build_and_deploy
     runs-on: ubuntu-latest
     permissions:
       contents: write
