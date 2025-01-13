@@ -74,7 +74,7 @@ jobs:
         shell: bash
         run: |
           # wjdlz/NOTE: extract & mask credentials
-          ${{ env.CI_DIR }}/scripts/install.sh
+          git update-index --chmod=+x ${{ env.CI_DIR }}/scripts/install.sh
 
       - name: Get pnpm store directory
         shell: bash
