@@ -145,6 +145,11 @@ const config: ForgeConfig = {
       //     V_APP_URL: process.env.MAIN_WINDOW_VITE_DEV_SERVER_URL
       //   })
       // );
+    },
+    readPackageJson: async (forgeConfig, pkg) => {
+      pkg.productName = ''
+      pkg.description = ''
+      return pkg
     }
   }
 }
