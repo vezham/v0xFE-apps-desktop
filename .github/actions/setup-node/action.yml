@@ -14,7 +14,6 @@ runs:
       shell: bash
       run: npm i -g pnpm
 
-    - run: npm i -g pnpm
     - name: Setup pnpm
       uses: pnpm/action-setup@v3
       with:
