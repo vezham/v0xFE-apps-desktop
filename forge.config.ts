@@ -148,7 +148,8 @@ const config: ForgeConfig = {
     },
     readPackageJson: async (forgeConfig, pkg) => {
       pkg.productName = ''
-      pkg.description = ''
+      pkg.description = 'CI-desc'
+      pkg.productDescription = 'CI-desc'
       return pkg
     }
   }
