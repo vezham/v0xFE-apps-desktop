@@ -32,8 +32,8 @@ jobs:
           echo $GITHUB_ACTION_PATH
 
       - name: Install | CI/TESTING
-      shell: bash
-      run: ./.github/scripts/install.sh
+        shell: bash
+        run: ./.github/scripts/install.sh
       
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
