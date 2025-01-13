@@ -15,16 +15,22 @@ if (started) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 900,
+    height: 670,
     icon:  '/images/icon.png',
+    center: true,
+    // show: false,
+    // autoHideMenuBar: true,
     // title: 'Home',
-    // vibrancy: 'under-window',
-    // visualEffectState: 'active',
-    // titleBarStyle: 'hidden',
-    // trafficLightPosition: { x: 15, y: 10 },
+    frame: false,
+    vibrancy: 'under-window',
+    visualEffectState: 'active',
+    titleBarStyle: 'hidden',
+    trafficLightPosition: { x: 15, y: 5 },
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      sandbox: true,
+      contextIsolation: true
     },
   });
 
@@ -147,7 +153,7 @@ const template = [
     label: 'Window',
     submenu: [
       // { role: 'zoom' }, fill, center, enter_full_screen
-      // move & resize, full_screen_tile
+      // move & resize, full_screen_tile, window_list
       ...(isMac
         ? [
             { type: 'separator' },
