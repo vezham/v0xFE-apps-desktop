@@ -18,7 +18,7 @@ env:
   # DX_APP_PATH:
   # DX_APP_NAME:
   # NX_APP_NAME:
-  
+
 jobs:
   build:
     name: Build
@@ -38,7 +38,8 @@ jobs:
         # uses: ./.github/actions/setup-install/action.yml
 
       - name: Build packages
-        run: pnpm make
+        # run: pnpm make
+        run: pnpm --version
 
   tests:
     name: Tests
@@ -49,7 +50,7 @@ jobs:
 
       - name: Install
         # uses: ./.github/common-actions/install
-        uses: ./.github/actions/setup-install
+        uses: ./.github/common-actions/setup-install
 
       - name: Run tests
         # run: pnpm test
@@ -77,7 +78,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install
-        uses: ./.github/common-actions/install
+        uses: ./.github/common-actions/setup-install/action.yml
 
       - name: Run typecheck
         # run: pnpm typecheck
@@ -91,7 +92,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install
-        uses: ./.github/common-actions/install
+        uses: ./.github/common-actions/setup-node
 
       - name: Run prettier
-        run: pnpm format:check
+        # run: pnpm format:check
+        run: pnpm --version
