@@ -38,8 +38,8 @@ jobs:
 
       - name: PNPM Version Check
         run: pnpm --version
-    
-    tva1:
+
+  tva1:
     name: TVA1
     strategy:
       matrix:
@@ -58,7 +58,7 @@ jobs:
       - name: PNPM Version Check
         run: pnpm --version
 
-    tva2:
+  tva2:
     name: TVA2
     strategy:
       matrix:
