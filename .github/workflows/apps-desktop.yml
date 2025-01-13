@@ -1,4 +1,4 @@
-# wjdlz/NOTE: ci@1.0.4-000kjkjkj
+# wjdlz/NOTE: ci@1.0.4-trigger-001
 name: apps-desktop | wf
 
 on:
@@ -9,6 +9,15 @@ on:
       - 'v/handbooks/ci.md'
     tags:
       - 'v*'
+
+env:
+  REPO: ${{ inputs.GIT_REPO || 'vezham/v0xFE-apps-desktop' }}
+  BRANCH: ${{ inputs.GIT_BRANCH || 'timeline' }}
+  CI_DIR: ./v/bin/ci
+  # ENTRY_POINT: ./
+  # DX_APP_PATH:
+  # DX_APP_NAME:
+  # NX_APP_NAME:
 
 jobs:
   build-and-release:

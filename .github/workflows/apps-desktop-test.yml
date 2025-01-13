@@ -96,7 +96,7 @@ jobs:
 
       - name: logs | ls
         run: ls
-      
+
       - name: Zip artifacts
         shell: bash
         run: |

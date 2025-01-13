@@ -1,0 +1,156 @@
+# wjdlz/NOTE: ci@1.0.4-trigger-001
+name: TVA | wf
+
+on:
+  push:
+    branches: [timeline]
+    paths:
+      - '.github/workflows/tva.yml'
+      - 'v/handbooks/ci.md'
+    tags:
+      - 'v*'
+
+env:
+  REPO: ${{ inputs.GIT_REPO || 'vezham/v0xFE-apps-desktop' }}
+  BRANCH: ${{ inputs.GIT_BRANCH || 'timeline' }}
+  CI_DIR: ./v/bin/ci
+  # ENTRY_POINT: ./
+  # DX_APP_PATH:
+  # DX_APP_NAME:
+  # NX_APP_NAME:
+
+jobs:
+  tva:
+    name: TVA
+    strategy:
+      matrix:
+        node-version: [20]
+        pnpm-version: [9.6.0]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    # runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/common-actions/setup-install
+
+      - name: PNPM Version Check
+        run: pnpm --version
+    
+    tva1:
+    name: TVA1
+    strategy:
+      matrix:
+        node-version: [20]
+        pnpm-version: [9.6.0]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    # runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: PNPM Version Check
+        run: pnpm --version
+
+    tva2:
+    name: TVA2
+    strategy:
+      matrix:
+        node-version: [20]
+        pnpm-version: [9.6.0]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    # runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install/action.yml
+
+      - name: PNPM Version Check
+        run: pnpm --version
+
+  # build:
+  #   name: Build
+  #   # runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [20]
+  #       pnpm-version: [9.6.0]
+  #       os: [ubuntu-latest, macos-latest, windows-latest]
+  #   runs-on: ${{ matrix.os }}
+  #   steps:
+  #     - name: Checkout branch
+  #       uses: actions/checkout@v4
+
+  #     - name: Install
+  #       uses: ./.github/common-actions/install
+  #       # uses: ./.github/actions/setup-install/action.yml
+
+  #     - name: Build packages
+  #       # run: pnpm make
+  #       run: pnpm --version
+
+  # tests:
+  #   name: Tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout branch
+  #       uses: actions/checkout@v4
+
+  #     - name: Install
+  #       # uses: ./.github/common-actions/install
+  #       uses: ./.github/common-actions/setup-install
+
+  #     - name: Run tests
+  #       # run: pnpm test
+  #       run: pnpm --version
+
+  # eslint:
+  #   name: ESLint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout branch
+  #       uses: actions/checkout@v4
+
+  #     - name: Install
+  #       uses: ./.github/common-actions/install/action.yml
+
+  #     - name: Run ESLint
+  #       # run: pnpm lint
+  #       run: pnpm --version
+
+  # types:
+  #   name: TypeScript
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout branch
+  #       uses: actions/checkout@v4
+
+  #     - name: Install
+  #       uses: ./.github/common-actions/setup-install/action.yml
+
+  #     - name: Run typecheck
+  #       # run: pnpm typecheck
+  #       run: pnpm --version
+
+  # prettier:
+  #   name: Prettier
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout branch
+  #       uses: actions/checkout@v4
+
+  #     - name: Install
+  #       uses: ./.github/common-actions/setup-node
+
+  #     - name: Run prettier
+  #       # run: pnpm format:check
+  #       run: pnpm --version
