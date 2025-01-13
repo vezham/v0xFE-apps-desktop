@@ -10,35 +10,65 @@ on:
     tags:
       - 'v*'
 
-jobs:
-  make:
-    runs-on: ${{ matrix.os }}
+env:
+  REPO: ${{ inputs.GIT_REPO || 'vezham/v0xFE-apps-desktop' }}
+  BRANCH: ${{ inputs.GIT_BRANCH || 'timeline' }}
+  CI_DIR: ./v/bin/ci
+  # ENTRY_POINT: ./
+  # DX_APP_PATH:
+  # DX_APP_NAME:
+  # NX_APP_NAME:
 
+jobs:
+  build_and_deploy:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-
+        node-version: [20]
+        pnpm-version: [9.6.0]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    # defaults:
+    #   run:
+    #     working-directory: ${{ env.ENTRY_POINT }}
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REPO }}
+          ref: ${{ env.BRANCH }}
 
-      - name: Setup Node.js
+      # wjdlz/TODO: ci-setup | fetch-credentials - via vezham CI host
+
+      # - name: ci-setup | extract $ENV_TOKENS
+      # - name: ci-setup | gen $ENV_TOKENS
+
+      - name: ci-setup | short-sha
+        uses: benjlevesque/short-sha@v3.0
+        id: short-sha
+
+      - name: ci-setup | $SHA
+        run: |
+          echo 'SHA=${{ steps.short-sha.outputs.sha }}' >> $GITHUB_ENV
+
+      # - name: ci-setup | gen DX_APP_URL
+
+      - name: setup | pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ matrix.pnpm-version }}
+
+      - name: setup | node env
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
 
-      - name: Get pnpm store directory
+      - name: ci-setup | NODE Install
         shell: bash
         run: |
-          echo $GITHUB_ACTION_PATH
-
-      - name: Install | CI/TESTING
-        shell: bash
-        run: ./.github/scripts/install.sh
-      
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: latest
+          # wjdlz/NOTE: extract & mask credentials
+          ${{ env.CI_DIR }}/scripts/install.sh
 
       - name: Get pnpm store directory
         shell: bash
