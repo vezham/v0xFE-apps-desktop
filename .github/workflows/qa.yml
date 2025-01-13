@@ -34,8 +34,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install
-        # uses: ./.github/common-actions/install
-        uses: ./.github/actions/setup-install/action.yml
+        uses: ./.github/common-actions/install
+        # uses: ./.github/actions/setup-install/action.yml
 
       - name: Build packages
         run: pnpm make
