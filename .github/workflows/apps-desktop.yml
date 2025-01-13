@@ -3,10 +3,10 @@ name: apps-desktop | wf
 
 on:
   push:
-    branches: [timeline]
-    paths:
-      - '.github/workflows/apps-desktop.yml'
-      - 'v/handbooks/ci.md'
+    # branches: [timeline]
+    # paths:
+    #   - '.github/workflows/apps-desktop.yml'
+    #   - 'v/handbooks/ci.md'
     tags:
       - 'v*'
 

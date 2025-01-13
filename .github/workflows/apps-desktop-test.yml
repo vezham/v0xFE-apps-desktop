@@ -1,0 +1,94 @@
+# wjdlz/NOTE: ci@1.0.4
+name: apps-desktop-test | wf
+
+on:
+  push:
+    branches: [timeline]
+    paths:
+      - '.github/workflows/apps-desktop.yml'
+      - 'v/handbooks/ci.md'
+    tags:
+      - 'v*'
+
+jobs:
+  make:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: latest
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Make Electron app
+        run: pnpm run make
+
+      - name: Zip artifacts
+        shell: bash
+        run: |
+          cd build/prod/make
+          if [ "${{ runner.os }}" == "Windows" ]; then
+            7z a ../../windows-artifacts.zip ./**/*.exe
+          elif [ "${{ runner.os }}" == "macOS" ]; then
+            zip -r ../../macos-artifacts.zip ./**/*.dmg
+          else
+            zip -r ../../linux-artifacts.zip ./**/*.{deb,rpm,AppImage}
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}-builds
+          path: |
+            *-artifacts.zip
+          if-no-files-found: ignore
+
+  create-release:
+    needs: make
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ github.ref_name }} \
+            --title "Release ${{ github.ref_name }}" \
+            --draft=false \
+            --prerelease=false \
+            artifacts/**/*.zip
