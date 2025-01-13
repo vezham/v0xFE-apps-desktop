@@ -11,6 +11,7 @@ runs:
         cache: 'pnpm'
 
     - name: Install PNPM
+      shell: bash
       run: npm i -g pnpm
 
     - run: npm i -g pnpm
