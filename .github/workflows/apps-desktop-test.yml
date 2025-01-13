@@ -5,7 +5,7 @@ on:
   push:
     branches: [timeline]
     paths:
-      - '.github/workflows/apps-desktop.yml'
+      - '.github/workflows/apps-desktop-test.yml'
       - 'v/handbooks/ci.md'
     tags:
       - 'v*'
