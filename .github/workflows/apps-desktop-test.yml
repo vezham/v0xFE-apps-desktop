@@ -50,6 +50,12 @@ jobs:
         run: |
           echo 'SHA=${{ steps.short-sha.outputs.sha }}' >> $GITHUB_ENV
 
+      - name: logs | post dir
+        run: pwd
+
+      - name: logs | ls
+        run: ls
+
       # - name: ci-setup | gen DX_APP_URL
 
       # - name: setup | pnpm
