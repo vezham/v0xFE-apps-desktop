@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Avoid excessive outputs
+if [ -t 2 ]; then
+  exec >/dev/tty 2>&1
+fi
+
+echo \”[Husky] wjdlz-pre-commit\”
+pnpm lint-staged -c .lintstagedrc.js
+
+# pnpm run format
+# pnpm run format && git add -A .

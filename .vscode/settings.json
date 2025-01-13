@@ -1,0 +1,73 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFoldingRangeProvider": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  // "editor.folding": true
+  // "editor.foldingStrategy": "indentation"
+  "editor.showFoldingControls": "mouseover",
+  "editor.accessibilitySupport": "off",
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll": "explicit",
+    "source.sortPackageJson": "explicit"
+  },
+  "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.xml": "html",
+    "*.svg": "html",
+    "*.css": "tailwindcss",
+    "*.less": "tailwindcss"
+  },
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**-lock.json": true,
+    "**-lock.yaml": true,
+    "**/coverage": true,
+    "**/bower_components": true,
+    // "generated/**": true,
+    ".nx/**": true,
+    ".git/**": true
+  },
+
+  "[html][vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "css.lint.unknownAtRules": "ignore",
+  "css.validate": true,
+  "less.lint.unknownAtRules": "ignore",
+  "stylelint.validate": ["css", "less"],
+  "[css][less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["tv\\((([^()]*|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[javascript][javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescript][typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "always"
+    }
+  }
+}

@@ -1,11 +1,11 @@
-import type { ForgeConfig } from '@electron-forge/shared-types';
-import { MakerSquirrel } from '@electron-forge/maker-squirrel';
-import { MakerZIP } from '@electron-forge/maker-zip';
-import { MakerDeb } from '@electron-forge/maker-deb';
-import { MakerRpm } from '@electron-forge/maker-rpm';
-import { VitePlugin } from '@electron-forge/plugin-vite';
-import { FusesPlugin } from '@electron-forge/plugin-fuses';
-import { FuseV1Options, FuseVersion } from '@electron/fuses';
+import { MakerDeb } from '@electron-forge/maker-deb'
+import { MakerRpm } from '@electron-forge/maker-rpm'
+import { MakerSquirrel } from '@electron-forge/maker-squirrel'
+import { MakerZIP } from '@electron-forge/maker-zip'
+import { FusesPlugin } from '@electron-forge/plugin-fuses'
+import { VitePlugin } from '@electron-forge/plugin-vite'
+import type { ForgeConfig } from '@electron-forge/shared-types'
+import { FuseV1Options, FuseVersion } from '@electron/fuses'
 import 'dotenv/config'
 import { writeFileSync } from 'fs'
 
@@ -27,7 +27,7 @@ type App = {
 type Author = {
   copyright: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  info: {[property: string]: any}
+  info: { [property: string]: any }
 }
 
 type AppUrl = {
@@ -42,10 +42,12 @@ type AppMenu = {
 
 const typeCast = <T>(data: string): T => {
   try {
-    const parsed_data = JSON.parse(data);
-    return parsed_data as T;
+    const parsed_data = JSON.parse(data)
+    return parsed_data as T
   } catch (error) {
-    throw new Error(`Failed to parse config: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `Failed to parse config: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
   }
 }
 
@@ -54,9 +56,12 @@ const author = typeCast<Author>(process.env.V_CONFIG_AUTHOR)
 
 // END of v-config.ts
 
-const getEnvBadge = () => `${app.env === 'prod'? '' : `.${app.env}.${app.status}`}`
-const getAppBundleId = () => `${app.pkg_bundle_id}${getEnvBadge()}.${app.app_bundle_id}`
-const getBundleVersion = () => `${app.build_version}${getEnvBadge()}.${process.env.SHA || Date.now()}`
+const getEnvBadge = () =>
+  `${app.env === 'prod' ? '' : `.${app.env}.${app.status}`}`
+const getAppBundleId = () =>
+  `${app.pkg_bundle_id}${getEnvBadge()}.${app.app_bundle_id}`
+const getBundleVersion = () =>
+  `${app.build_version}${getEnvBadge()}.${process.env.SHA || Date.now()}`
 
 // ******** CONFIG ********
 
@@ -65,7 +70,7 @@ const config: ForgeConfig = {
   buildIdentifier: app.env,
   packagerConfig: {
     name: app.name,
-    icon:'images/icon',
+    icon: 'images/icon',
     appBundleId: getAppBundleId(),
     appVersion: app.app_version,
     buildVersion: getBundleVersion(),
@@ -76,7 +81,12 @@ const config: ForgeConfig = {
     // osxSign: {},
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}, ['win32']), new MakerZIP({}, ['darwin']), new MakerRpm({}, ['linux']), new MakerDeb({}, ['linux'])],
+  makers: [
+    new MakerSquirrel({}, ['win32']),
+    new MakerZIP({}, ['darwin']),
+    new MakerRpm({}, ['linux']),
+    new MakerDeb({}, ['linux'])
+  ],
   plugins: [
     new VitePlugin({
       // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
@@ -86,20 +96,20 @@ const config: ForgeConfig = {
           // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
           entry: 'src/main.ts',
           config: 'vite.main.config.ts',
-          target: 'main',
+          target: 'main'
         },
         {
           entry: 'src/preload.ts',
           config: 'vite.preload.config.ts',
-          target: 'preload',
-        },
+          target: 'preload'
+        }
       ],
       renderer: [
         {
           name: 'main_window',
-          config: 'vite.renderer.config.ts',
-        },
-      ],
+          config: 'vite.renderer.config.ts'
+        }
+      ]
     }),
     // Fuses are used to enable/disable various Electron functionality
     // at package time, before code signing the application
@@ -110,8 +120,8 @@ const config: ForgeConfig = {
       [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
       [FuseV1Options.EnableNodeCliInspectArguments]: false,
       [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
-      [FuseV1Options.OnlyLoadAppFromAsar]: true,
-    }),
+      [FuseV1Options.OnlyLoadAppFromAsar]: true
+    })
   ],
   hooks: {
     generateAssets: async () => {
@@ -127,7 +137,7 @@ const config: ForgeConfig = {
           V_APP_URL: url,
           V_HELP_CENTER: app_menu.help_center
         })
-      );
+      )
       // writeFileSync(
       //   './src/v.config.env',
       //   JSON.stringify({
@@ -137,6 +147,6 @@ const config: ForgeConfig = {
       // );
     }
   }
-};
+}
 
-export default config;
+export default config

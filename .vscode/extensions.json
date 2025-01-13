@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "unional.vscode-sort-package-json",
+    "bradlc.vscode-tailwindcss",
+    "wix.vscode-import-cost",
+    "PKief.material-icon-theme",
+    "github.vscode-github-actions",
+    "yoavbls.pretty-ts-errors"
+  ]
+}
