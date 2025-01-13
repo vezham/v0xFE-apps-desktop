@@ -52,17 +52,17 @@ jobs:
 
       # - name: ci-setup | gen DX_APP_URL
 
-      - name: setup | pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ matrix.pnpm-version }}
+      # - name: setup | pnpm
+      #   uses: pnpm/action-setup@v4
+      #   with:
+      #     version: ${{ matrix.pnpm-version }}
 
-      - name: setup | node env
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-lock.yaml'
+      # - name: setup | node env
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
+      #     cache: 'pnpm'
+      #     cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: ci-setup | NODE Install
         shell: bash
