@@ -61,6 +61,12 @@ jobs:
       - name: ci-setup | SHA
         uses: ./.github/actions/setup-sha
 
+      - name: ci-setup | gen DX_APP_URL
+        uses: ./.github/actions/gen-dx-app-url
+
+      - name: deployer | create commit comment
+        uses: ./.github/actions/add-commit-comment
+
       # EOT......
 
       # - uses: ./.github/actions/setup-certificates
