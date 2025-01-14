@@ -5,10 +5,10 @@ runs:
   using: composite
   steps:
     - name: ci-setup | short-sha
+      id: short-sha
       uses: benjlevesque/short-sha@v3.0
-        id: short-sha
 
     - name: ci-setup | $SHA
       shell: bash
       run: |
-          echo 'SHA=${{ steps.short-sha.outputs.sha }}' >> $GITHUB_ENV
+        echo 'SHA=${{ steps.short-sha.outputs.sha }}' >> $GITHUB_ENV
