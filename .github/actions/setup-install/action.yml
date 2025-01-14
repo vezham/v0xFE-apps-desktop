@@ -1,25 +1,27 @@
-name: 'Install'
-description: 'Sets up Node.js and runs install'
+name: Setup Node.js and pnpm
+description: Sets up Node.js and pnpm with caching
 
 runs:
   using: composite
   steps:
-    - name: Install dependencies
+    - name: setup | pnpm
       uses: pnpm/action-setup@v4
+      with:
+        version: ${{ matrix.pnpm-version }}
 
-    - name: Setup Node.js
+    - name: setup | node env
       uses: actions/setup-node@v4
       with:
-        # node-version-file: ".nvmrc"
-        # registry-url: "https://registry.npmjs.org"
+        node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
+        cache-dependency-path: '**/pnpm-lock.yaml'
 
-    # - name: Setup Git User
+    # - name: setup | Git User (Deployer)
     #   shell: bash
     #   run: |
-    #     git config --global user.email "jrgarciadev@gmail.com"
-    #     git config --global user.name "Junior Garcia"
+    #     git config --global user.email "deployer@vezham.com"
+    #     git config --global user.name "Deployer Vezham"
 
-    - name: Install dependencies
+    - name: setup | pnpm install
       shell: bash
-      run: pnpm install
+      run: pnpm install --frozen-lockfile --ignore-scripts

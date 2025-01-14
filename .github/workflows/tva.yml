@@ -39,7 +39,7 @@ jobs:
           repository: ${{ env.REPO }}
           ref: ${{ env.BRANCH }}
 
-      - name: setup | pnpm & install
+      - name: setup | node & pnpm
         uses: ./.github/actions/setup-install
 
       - name: setup | pnpm version check
@@ -55,7 +55,7 @@ jobs:
           repository: ${{ env.REPO }}
           ref: ${{ env.BRANCH }}
 
-      - name: setup | pnpm & install
+      - name: setup | node & pnpm
         uses: ./.github/actions/setup-install
 
       - name: cli | format
@@ -71,7 +71,7 @@ jobs:
   #         repository: ${{ env.REPO }}
   #         ref: ${{ env.BRANCH }}
 
-  #     - name: setup | pnpm & install
+  #     - name: setup | node & pnpm
   #       uses: ./.github/actions/setup-install
 
   #     - name: cli | tests
@@ -87,7 +87,7 @@ jobs:
   #         repository: ${{ env.REPO }}
   #         ref: ${{ env.BRANCH }}
 
-  #     - name: setup | pnpm & install
+  #     - name: setup | node & pnpm
   #       uses: ./.github/actions/setup-install
 
   #     - name: cli | typecheck
