@@ -42,7 +42,6 @@ jobs:
     #     working-directory: ${{ env.ENTRY_POINT }}
     permissions:
       contents: write
-      # contents: read
       # actions: read
       # checks: write
 
@@ -61,8 +60,8 @@ jobs:
 
       # POC --- EOT......
 
-      - name: ci-setup | SHA
-        uses: ./.github/actions/setup-sha
+      # - name: ci-setup | SHA
+      #   uses: ./.github/actions/setup-sha
 
       - name: ci-setup | gen DX_APP_URL
         uses: ./.github/actions/gen-dx-app-url
