@@ -40,8 +40,11 @@ jobs:
     # defaults:
     #   run:
     #     working-directory: ${{ env.ENTRY_POINT }}
-    # permissions:
-    #   contents: write
+    permissions:
+      # contents: write
+      contents: read
+      # actions: read
+      # checks: write
 
     steps:
       - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
