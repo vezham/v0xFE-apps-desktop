@@ -29,128 +29,69 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     # runs-on: ubuntu-latest
+    # defaults:
+    #   run:
+    #     working-directory: ${{ env.ENTRY_POINT }}
     steps:
-      - name: Checkout branch
+      - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
         uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REPO }}
+          ref: ${{ env.BRANCH }}
 
-      - name: Install
-        uses: ./.github/common-actions/setup-install
+      - name: setup | pnpm & install
+        uses: ./.github/actions/setup-install
 
-      - name: PNPM Version Check
+      - name: setup | pnpm version check
         run: pnpm --version
 
-  tva1:
-    name: TVA1
-    strategy:
-      matrix:
-        node-version: [20]
-        pnpm-version: [9.6.0]
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    # runs-on: ubuntu-latest
+  format:
+    name: Format (pkg,prettier) & Lint (eslint,stylelint)
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout branch
+      - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
         uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REPO }}
+          ref: ${{ env.BRANCH }}
 
-      - name: Install
-        uses: ./.github/actions/install
+      - name: setup | pnpm & install
+        uses: ./.github/actions/setup-install
 
-      - name: PNPM Version Check
-        run: pnpm --version
-
-  tva2:
-    name: TVA2
-    strategy:
-      matrix:
-        node-version: [20]
-        pnpm-version: [9.6.0]
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    # runs-on: ubuntu-latest
-    steps:
-      - name: Checkout branch
-        uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install/action.yml
-
-      - name: PNPM Version Check
-        run: pnpm --version
-
-  # build:
-  #   name: Build
-  #   # runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [20]
-  #       pnpm-version: [9.6.0]
-  #       os: [ubuntu-latest, macos-latest, windows-latest]
-  #   runs-on: ${{ matrix.os }}
-  #   steps:
-  #     - name: Checkout branch
-  #       uses: actions/checkout@v4
-
-  #     - name: Install
-  #       uses: ./.github/common-actions/install
-  #       # uses: ./.github/actions/setup-install/action.yml
-
-  #     - name: Build packages
-  #       # run: pnpm make
-  #       run: pnpm --version
+      - name: cli | format
+        run: pnpm format
 
   # tests:
   #   name: Tests
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - name: Checkout branch
+  #     - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
   #       uses: actions/checkout@v4
+  #       with:
+  #         repository: ${{ env.REPO }}
+  #         ref: ${{ env.BRANCH }}
 
-  #     - name: Install
-  #       # uses: ./.github/common-actions/install
-  #       uses: ./.github/common-actions/setup-install
+  #     - name: setup | pnpm & install
+  #       uses: ./.github/actions/setup-install
 
-  #     - name: Run tests
-  #       # run: pnpm test
-  #       run: pnpm --version
-
-  # eslint:
-  #   name: ESLint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout branch
-  #       uses: actions/checkout@v4
-
-  #     - name: Install
-  #       uses: ./.github/common-actions/install/action.yml
-
-  #     - name: Run ESLint
-  #       # run: pnpm lint
-  #       run: pnpm --version
+  #     - name: cli | tests
+  #       run: pnpm test
 
   # types:
   #   name: TypeScript
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - name: Checkout branch
+  #     - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
   #       uses: actions/checkout@v4
+  #       with:
+  #         repository: ${{ env.REPO }}
+  #         ref: ${{ env.BRANCH }}
 
-  #     - name: Install
-  #       uses: ./.github/common-actions/setup-install/action.yml
+  #     - name: setup | pnpm & install
+  #       uses: ./.github/actions/setup-install
 
-  #     - name: Run typecheck
-  #       # run: pnpm typecheck
-  #       run: pnpm --version
+  #     - name: cli | typecheck
+  #       run: pnpm typecheck
 
-  # prettier:
-  #   name: Prettier
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout branch
-  #       uses: actions/checkout@v4
-
-  #     - name: Install
-  #       uses: ./.github/common-actions/setup-node
-
-  #     - name: Run prettier
-  #       # run: pnpm format:check
-  #       run: pnpm --version
+  # build:
+  #   name: Build
