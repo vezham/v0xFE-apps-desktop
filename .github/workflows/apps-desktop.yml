@@ -41,8 +41,8 @@ jobs:
     #   run:
     #     working-directory: ${{ env.ENTRY_POINT }}
     permissions:
-      # contents: write
-      contents: read
+      contents: write
+      # contents: read
       # actions: read
       # checks: write
 
