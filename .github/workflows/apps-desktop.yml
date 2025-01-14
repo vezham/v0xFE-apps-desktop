@@ -1,4 +1,4 @@
-# wjdlz/NOTE: ci@1.0.4-trigger-001
+# wjdlz/NOTE: ci@1.0.4-trigger
 name: apps-desktop | wf
 
 on:
@@ -7,8 +7,8 @@ on:
     paths:
       - '.github/workflows/apps-desktop.yml'
       - 'v/handbooks/ci.md'
-    tags:
-      - 'v*'
+    # tags:
+    #   - 'v*'
 
 env:
   REPO: ${{ inputs.GIT_REPO || 'vezham/v0xFE-apps-desktop' }}
@@ -20,29 +20,43 @@ env:
   # NX_APP_NAME:
 
 jobs:
-  build-and-release:
-    runs-on: ${{ matrix.os }}
-    permissions:
-      contents: write
-
+  build_and_deploy:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node-version: [20]
+        pnpm-version: [9.6.0]
         include:
+          - os: ubuntu-latest
+            artifact_name: linux-artifacts
+            artifact_glob: 'make/**/*.{deb,rpm,AppImage}'
           - os: macos-latest
             artifact_name: macos-artifacts
             artifact_glob: 'make/**/*.dmg'
           - os: windows-latest
             artifact_name: windows-artifacts
             artifact_glob: 'make/**/*.exe'
-          - os: ubuntu-latest
-            artifact_name: linux-artifacts
-            artifact_glob: 'make/**/*.{deb,rpm,AppImage}'
+    runs-on: ${{ matrix.os }}
+    # defaults:
+    #   run:
+    #     working-directory: ${{ env.ENTRY_POINT }}
+    # permissions:
+    #   contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REPO }}
+          ref: ${{ env.BRANCH }}
 
-      - uses: ./.github/actions/setup-node
+      - name: setup | node & pnpm
+        uses: ./.github/actions/setup-install
+
+      - name: setup | pnpm version check
+        run: pnpm --version
+
+      # EOT......
 
       - uses: ./.github/actions/setup-certificates
         with:

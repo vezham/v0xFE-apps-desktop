@@ -1,4 +1,4 @@
-# wjdlz/NOTE: ci@1.0.4-trigger-0011
+# wjdlz/NOTE: ci@1.0.4
 name: TVA | wf
 
 on:
@@ -7,8 +7,8 @@ on:
     paths:
       - '.github/workflows/tva.yml'
       - 'v/handbooks/ci.md'
-    tags:
-      - 'v*'
+    # tags:
+    #   - 'v*'
 
 env:
   REPO: ${{ inputs.GIT_REPO || 'vezham/v0xFE-apps-desktop' }}
@@ -24,14 +24,15 @@ jobs:
     name: TVA
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [20]
         pnpm-version: [9.6.0]
-        os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     # runs-on: ubuntu-latest
     # defaults:
     #   run:
     #     working-directory: ${{ env.ENTRY_POINT }}
+
     steps:
       - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
         uses: actions/checkout@v4
@@ -48,6 +49,7 @@ jobs:
   format:
     name: Format (pkg,prettier) & Lint (eslint,stylelint)
     runs-on: ubuntu-latest
+
     steps:
       - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
         uses: actions/checkout@v4
@@ -64,6 +66,7 @@ jobs:
   # tests:
   #   name: Tests
   #   runs-on: ubuntu-latest
+  #
   #   steps:
   #     - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
   #       uses: actions/checkout@v4
@@ -80,6 +83,7 @@ jobs:
   # types:
   #   name: TypeScript
   #   runs-on: ubuntu-latest
+  #
   #   steps:
   #     - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
   #       uses: actions/checkout@v4
