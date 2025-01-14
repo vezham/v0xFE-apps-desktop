@@ -25,3 +25,7 @@ runs:
     - name: setup | pnpm install
       shell: bash
       run: pnpm install --frozen-lockfile --ignore-scripts
+
+    - name: setup | pnpm version check
+      shell: bash
+      run: pnpm --version
