@@ -141,6 +141,7 @@ const config: ForgeConfig = {
     },
     readPackageJson: async (_, pkg) => {
       pkg.productName = ''
+      pkg.executableName = pkg.name
       pkg.description = 'CI-desc'
       pkg.productDescription = 'CI-desc'
       return pkg
