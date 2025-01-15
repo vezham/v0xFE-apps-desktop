@@ -13,7 +13,6 @@ on:
 jobs:
   deployer:
     name: apps-desktop | ${{github.ref_name}}
-    runs-on: ubuntu-latest
     uses: vezham/v0xFE-deployer/.github/workflows/tva.yml@timeline
     secrets: inherit
     with:
