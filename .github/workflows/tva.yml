@@ -15,5 +15,7 @@ jobs:
     name: apps-desktop | ${{github.ref_name}}
     uses: vezham/v0xFE-deployer/.github/workflows/tva.yml@timeline
     secrets: inherit
+    permissions:
+      contents: write
     with:
       CALLER: ${{github.ref_name}}
