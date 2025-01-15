@@ -3,115 +3,18 @@ name: TVA | wf
 
 on:
   push:
-    branches: [timeline]
+    branches: [timeline, deploy/dev, deploy/qa, deploy/preview, deploy/prod]
     paths:
       - '.github/workflows/tva.yml'
       - 'v/handbooks/ci.md'
-    # tags:
-    #   - 'v*'
-
-env:
-  REPO: ${{ inputs.GIT_REPO || 'vezham/v0xFE-apps-desktop' }}
-  BRANCH: ${{ inputs.GIT_BRANCH || 'timeline' }}
-  CI_DIR: ./v/bin/ci
-  # ENTRY_POINT: ./
-  # DX_APP_PATH:
-  # DX_APP_NAME:
-  # NX_APP_NAME:
+    tags:
+      - 'ci@deployer*'
 
 jobs:
-  tva:
-    name: TVA
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        node-version: [20]
-        pnpm-version: [9.6.0]
-    runs-on: ${{ matrix.os }}
-    # runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: ${{ env.ENTRY_POINT }}
-    permissions:
-      contents: write
-      # actions: read
-      # checks: write
-
-    steps:
-      - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.REPO }}
-          ref: ${{ env.BRANCH }}
-
-      - name: action | node & pnpm
-        uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
-
-  format:
-    name: Format (pkg,prettier) & Lint (eslint,stylelint)
+  deployer:
+    name: apps-desktop | ${{github.ref_name}}
     runs-on: ubuntu-latest
-
-    steps:
-      - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.REPO }}
-          ref: ${{ env.BRANCH }}
-
-      - name: action | node & pnpm
-        uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
-
-      - name: cli | format
-        run: pnpm format
-
-  # tests:
-  #   name: Tests
-  #   runs-on: ubuntu-latest
-  #
-  #   steps:
-  #     - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
-  #       uses: actions/checkout@v4
-  #       with:
-  #         repository: ${{ env.REPO }}
-  #         ref: ${{ env.BRANCH }}
-
-  #     - name: action | node & pnpm
-  #       uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
-
-  #     - name: cli | tests
-  #       run: pnpm test
-
-  # types:
-  #   name: TypeScript
-  #   runs-on: ubuntu-latest
-  #
-  #   steps:
-  #     - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
-  #       uses: actions/checkout@v4
-  #       with:
-  #         repository: ${{ env.REPO }}
-  #         ref: ${{ env.BRANCH }}
-
-  #     - name: action | node & pnpm
-  #       uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
-
-  #     - name: cli | typecheck
-  #       run: pnpm typecheck
-
-  # build:
-  #   name: Build
-  #   runs-on: ubuntu-latest
-  #
-  #   steps:
-  #     - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
-  #       uses: actions/checkout@v4
-  #       with:
-  #         repository: ${{ env.REPO }}
-  #         ref: ${{ env.BRANCH }}
-
-  #     - name: action | node & pnpm
-  #       uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
-
-  #     - name: cli | build
-  #       run: pnpm nx build
-  #       run: npm run build --name=${{ env.NX_APP_NAME }}
+    uses: vezham/v0xFE-deployer/.github/workflows/tva.yml@timeline
+    secrets: inherit
+    with:
+      CALLER: ${{github.ref_name}}
