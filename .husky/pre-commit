@@ -6,8 +6,5 @@ if [ -t 2 ]; then
   exec >/dev/tty 2>&1
 fi
 
-echo \”[Husky] wjdlz-pre-commit\”
+echo \”[Husky] wjdlz/pre-commit\”
 pnpm lint-staged -c .lintstagedrc.js
-
-# pnpm run format
-# pnpm run format && git add -A .

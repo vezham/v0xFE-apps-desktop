@@ -138,15 +138,8 @@ const config: ForgeConfig = {
           V_HELP_CENTER: app_menu.help_center
         })
       )
-      // writeFileSync(
-      //   './src/v.config.env',
-      //   JSON.stringify({
-      //     v_app_url: process.env.V_APP_URL,
-      //     V_APP_URL: process.env.MAIN_WINDOW_VITE_DEV_SERVER_URL
-      //   })
-      // );
     },
-    readPackageJson: async (forgeConfig, pkg) => {
+    readPackageJson: async (_, pkg) => {
       pkg.productName = ''
       pkg.description = 'CI-desc'
       pkg.productDescription = 'CI-desc'
