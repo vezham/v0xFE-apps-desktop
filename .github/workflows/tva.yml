@@ -12,7 +12,7 @@ on:
 
 jobs:
   deployer:
-    name: apps-desktop | ${{github.ref_name}}
+    name: TVA | ${{github.ref_name}}
     uses: vezham/v0xFE-deployer/.github/workflows/tva.yml@timeline
     secrets: inherit
     permissions:
