@@ -67,9 +67,10 @@ const getBundleVersion = () =>
 
 const config: ForgeConfig = {
   outDir: './build',
-  buildIdentifier: app.env,
+  // buildIdentifier: app.env,
   packagerConfig: {
     name: app.name,
+    executableName: app.name,
     icon: 'images/icon',
     appBundleId: getAppBundleId(),
     appVersion: app.app_version,
@@ -141,7 +142,7 @@ const config: ForgeConfig = {
     },
     readPackageJson: async (_, pkg) => {
       pkg.productName = ''
-      pkg.executableName = pkg.name
+      // pkg.executableName = pkg.name
       pkg.description = pkg.name
       pkg.productDescription = pkg.name
       return pkg
