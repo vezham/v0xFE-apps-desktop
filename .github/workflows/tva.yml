@@ -44,8 +44,7 @@ jobs:
           repository: ${{ env.REPO }}
           ref: ${{ env.BRANCH }}
 
-      - name: setup | node & pnpm
-        # uses: ./.github/actions/setup-install
+      - name: action | node & pnpm
         uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
 
   format:
@@ -59,8 +58,8 @@ jobs:
           repository: ${{ env.REPO }}
           ref: ${{ env.BRANCH }}
 
-      - name: setup | node & pnpm
-        uses: ./.github/actions/setup-install
+      - name: action | node & pnpm
+        uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
 
       - name: cli | format
         run: pnpm format
@@ -76,8 +75,8 @@ jobs:
   #         repository: ${{ env.REPO }}
   #         ref: ${{ env.BRANCH }}
 
-  #     - name: setup | node & pnpm
-  #       uses: ./.github/actions/setup-install
+  #     - name: action | node & pnpm
+  #       uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
 
   #     - name: cli | tests
   #       run: pnpm test
@@ -93,11 +92,26 @@ jobs:
   #         repository: ${{ env.REPO }}
   #         ref: ${{ env.BRANCH }}
 
-  #     - name: setup | node & pnpm
-  #       uses: ./.github/actions/setup-install
+  #     - name: action | node & pnpm
+  #       uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
 
   #     - name: cli | typecheck
   #       run: pnpm typecheck
 
   # build:
   #   name: Build
+  #   runs-on: ubuntu-latest
+  #
+  #   steps:
+  #     - name: checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: ${{ env.REPO }}
+  #         ref: ${{ env.BRANCH }}
+
+  #     - name: action | node & pnpm
+  #       uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
+
+  #     - name: cli | build
+  #       run: pnpm nx build
+  #       run: npm run build --name=${{ env.NX_APP_NAME }}

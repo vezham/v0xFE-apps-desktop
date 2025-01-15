@@ -1,4 +1,4 @@
-# wjdlz/NOTE: ci@1.0.4-trigger-001
+# wjdlz/NOTE: ci@1.0.4
 name: apps-desktop | wf
 
 on:
@@ -48,16 +48,20 @@ jobs:
           repository: ${{ env.REPO }}
           ref: ${{ env.BRANCH }}
 
-      - name: setup | node & pnpm
-        uses: ./.github/actions/setup-install
+      - name: action | node & pnpm
+        uses: vezham/v0xFE-deployer/.github/actions/setup-install@timeline
 
       # POC --- EOT......
 
-      - name: ci-setup | gen DX_APP_URL
-        uses: ./.github/actions/gen-dx-app-url
+      - name: action | gen DX_APP_URL
+        uses: vezham/v0xFE-deployer/.github/actions/gen-dx-app-url@timeline
 
-      - name: deployer | create commit comment
-        uses: ./.github/actions/add-commit-comment
+      - name: action | create commit comment
+        uses: vezham/v0xFE-deployer/.github/actions/add-commit-comment@timeline
+
+      # - name: cli | build
+      #   run: |
+      #     pnpm run make
 
       # - uses: ./.github/actions/setup-certificates
       #   with:
