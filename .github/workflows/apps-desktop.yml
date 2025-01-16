@@ -1,9 +1,9 @@
 # wjdlz/NOTE: ci@1.0.5
-name: apps-desktop | wf
+name: apps-desktop
 
 on:
   push:
-    branches: [timeline, deploy/dev, deploy/qa, deploy/preview, deploy/prod]
+    branches: [timeline]
     paths:
       - '.github/workflows/apps-desktop.yml'
       - 'v/handbooks/ci.md'
@@ -12,7 +12,7 @@ on:
 
 jobs:
   deployer:
-    name: apps-desktop | ${{github.ref_name}}
+    name: ${{github.ref_name}}
     uses: vezham/v0xFE-deployer/.github/workflows/apps-desktop.yml@timeline
     secrets: inherit
     permissions:

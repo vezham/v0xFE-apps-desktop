@@ -1,9 +1,9 @@
 # wjdlz/NOTE: ci@1.0.5
-name: TVA | wf
+name: TVA
 
 on:
   push:
-    branches: [timeline, deploy/dev, deploy/qa, deploy/preview, deploy/prod]
+    branches: [timeline]
     paths:
       - '.github/workflows/tva.yml'
       - 'v/handbooks/ci.md'
@@ -12,7 +12,7 @@ on:
 
 jobs:
   deployer:
-    name: TVA | ${{github.ref_name}}
+    name: ${{github.ref_name}}
     uses: vezham/v0xFE-deployer/.github/workflows/tva.yml@timeline
     secrets: inherit
     permissions:
