@@ -60,8 +60,12 @@ const getEnvBadge = () =>
   `${app.env === 'prod' ? '' : `.${app.env}.${app.status}`}`
 const getAppBundleId = () =>
   `${app.pkg_bundle_id}${getEnvBadge()}.${app.app_bundle_id}`
-const getBundleVersion = () =>
-  `${app.build_version}${getEnvBadge()}.${process.env.SHA || Date.now()}`
+const getBundleVersion = () => {
+  const isWin = process.platform === 'win32'
+  return isWin
+    ? `00${Date.now()}`
+    : `${app.build_version}${getEnvBadge()}.${process.env.SHA || Date.now()}`
+}
 
 // ******** CONFIG ********
 
