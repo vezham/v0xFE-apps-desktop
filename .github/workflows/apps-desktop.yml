@@ -8,7 +8,7 @@ on:
       - '.github/workflows/apps-desktop.yml'
       - 'v/handbooks/ci.md'
     tags:
-      - 'ci*@*' # ci@suites-hq@1.0.5, ci/timeline@suites-hq@1.0.5, ci/dev@suites-hq@1.0.5, ...
+      - 'ci*' # ci@suites-hq@1.0.5, ci/timeline@suites-hq@1.0.5, ci/dev@suites-hq@1.0.5, ...
 
 jobs:
   deployer:
