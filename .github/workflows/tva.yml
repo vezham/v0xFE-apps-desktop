@@ -8,7 +8,7 @@ on:
       - '.github/workflows/tva.yml'
       - 'v/handbooks/ci.md'
     tags:
-      - 'ci@deployer*'
+      - 'ci@*' # ci@suites-hq@1.0.5, ci@suites-hq@1.0.5-dev, ...
 
 jobs:
   deployer:
