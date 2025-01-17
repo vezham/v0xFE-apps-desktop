@@ -3,11 +3,11 @@ name: TVA
 
 on:
   push:
-    branches: [timeline]
-    paths:
-      - '.github/workflows/tva.yml'
-    tags:
-      - '*/ci' # @suites-hq@1.0.5@timeline/ci, @suites-hq@1.0.5@dev/ci, ...
+    branches: [-timeline]
+    # paths:
+    #   - '.github/workflows/tva.yml'
+    # tags:
+    #   - '*/ci' # wjdlz/NOTE: v/handbooks/tags.md
 
 jobs:
   deployer:

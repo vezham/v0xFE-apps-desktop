@@ -7,7 +7,7 @@ on:
     paths:
       - '.github/workflows/apps-desktop.yml'
     tags:
-      - '*/ci' # @suites-hq@1.0.5@timeline/ci, @suites-hq@1.0.5@dev/ci, ...
+      - '*/ci' # wjdlz/NOTE: v/handbooks/tags.md
 
 jobs:
   deployer:
