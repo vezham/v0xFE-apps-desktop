@@ -7,7 +7,7 @@ on:
     paths:
       - '.github/workflows/tva.yml'
     tags:
-      - 'ci@*' # ci@suites-hq@1.0.5@timeline, ci@suites-hq@1.0.5@dev, ...
+      - '*/ci' # @suites-hq@1.0.5@timeline/ci, @suites-hq@1.0.5@dev/ci, ...
 
 jobs:
   deployer:
