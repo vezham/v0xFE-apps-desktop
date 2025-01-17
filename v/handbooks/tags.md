@@ -14,8 +14,11 @@
 @preview/ci
 @prod/ci
 
-### Apps
+### Suites
 
 @suites-one
 @suites-hq
+
+### Apps
+
 @apps-messenger
